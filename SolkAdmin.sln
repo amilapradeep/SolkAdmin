@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solk.UI", "Solk.UI\Solk.UI.csproj", "{ABFFF1E6-3378-4669-9A0C-419B7F0107E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolkAdmin.UI", "SolkAdmin.UI\SolkAdmin.UI.csproj", "{ABFFF1E6-3378-4669-9A0C-419B7F0107E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolkAdmin.DbAccess", "SolkAdmin.DbAccess\SolkAdmin.DbAccess.csproj", "{69E6D7EF-61F7-41C5-A176-0BB04C1DC749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolkAdmin.Common", "SolkAdmin.Common\SolkAdmin.Common.csproj", "{6648D663-0524-46E2-BEB9-763381C26E74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolkAdmin.DTO", "SolkAdmin.DTO\SolkAdmin.DTO.csproj", "{3E449C8D-7993-4858-9ABA-0FC10BF5B87E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{ABFFF1E6-3378-4669-9A0C-419B7F0107E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABFFF1E6-3378-4669-9A0C-419B7F0107E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABFFF1E6-3378-4669-9A0C-419B7F0107E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69E6D7EF-61F7-41C5-A176-0BB04C1DC749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69E6D7EF-61F7-41C5-A176-0BB04C1DC749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69E6D7EF-61F7-41C5-A176-0BB04C1DC749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69E6D7EF-61F7-41C5-A176-0BB04C1DC749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6648D663-0524-46E2-BEB9-763381C26E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6648D663-0524-46E2-BEB9-763381C26E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6648D663-0524-46E2-BEB9-763381C26E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6648D663-0524-46E2-BEB9-763381C26E74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E449C8D-7993-4858-9ABA-0FC10BF5B87E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E449C8D-7993-4858-9ABA-0FC10BF5B87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E449C8D-7993-4858-9ABA-0FC10BF5B87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E449C8D-7993-4858-9ABA-0FC10BF5B87E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
