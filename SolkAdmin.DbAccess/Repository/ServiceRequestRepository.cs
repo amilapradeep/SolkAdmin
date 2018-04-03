@@ -166,9 +166,9 @@ namespace SolkAdmin.DbAccess.Repository
             return GetPendingByAgentIdCount(AgentId);
         }
 
-        public List<IServiceRequest> GetAll()
+        public IEnumerable<ServiceRequest> GetAll()
         {   
-            var serviceRequests = context.ServiceRequests.ToList<IServiceRequest>();
+            var serviceRequests = context.ServiceRequests.ToList();
             return serviceRequests;
         }
     }

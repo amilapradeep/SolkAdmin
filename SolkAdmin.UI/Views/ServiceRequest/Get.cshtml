@@ -1,0 +1,116 @@
+﻿@model IEnumerable<SolkAdmin.DTO.ServiceRequest>
+
+@{
+    ViewBag.Title = "ServiceRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ServiceRequest</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InsuranceTypeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeOccured)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClaimType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UsageType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegistrationCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsFinanced)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuyerResponded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InsuranceTypeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeOccured)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClaimType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UsageType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegistrationCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsFinanced)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuyerResponded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
