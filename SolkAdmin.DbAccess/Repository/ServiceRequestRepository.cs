@@ -3,6 +3,7 @@ using SolkAdmin.DTO;
 using SolkAdmin.DTO.Contract;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -170,6 +171,21 @@ namespace SolkAdmin.DbAccess.Repository
         {   
             var serviceRequests = context.ServiceRequests.ToList();
             return serviceRequests;
+        }
+
+        public IEnumerable<EnquiryForAdmin> GetAllForSendQuote(long? id, string RequestNoOrVehicleNo, DateTime? FromDate, DateTime? Toate, bool IsOnlyNotSentQuote)
+        {
+            var idParam = new SqlParameter("@Id", id);
+
+            if (id == null)
+            {
+                idParam.Value = DBNull.Value;
+            }
+
+            var result = context.Database
+                .SqlQuery<EnquiryForAdmin>("uspDailyEnquiryForAdmin @Id", idParam)
+                .ToList();
+            return result;
         }
     }
 }

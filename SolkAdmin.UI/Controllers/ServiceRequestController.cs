@@ -6,53 +6,58 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Linq;
+using SolkAdmin.UI.Helpers;
+using System.Threading.Tasks;
 
 namespace SolkAdmin.UI.Controllers
 {
     public class ServiceRequestController : Controller
     {
+        private IEnumerable<EnquiryForAdmin> request;
+
+
         // GET: api/ServiceRequest
         public ActionResult Get()
         {
-            IEnumerable<ServiceRequest> request = null;
-            ServiceRequestModel model = null;
-            
+            using (AppDBContext context = new AppDBContext())
+            {
+                request = new ServiceRequestRepository(context).GetAllForSendQuote(null, null, null, null, true);
+            }
+            return View(request);
+        }
 
-            //try
-            //{
+        public ActionResult GetDetail(int Id)
+        {
+            using (AppDBContext context = new AppDBContext())
+            {
+                request = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);
+            }
+            EnquiryForAdmin model = request.Where(x => x.Id == Id).FirstOrDefault();
+
+            return PartialView("SendQuote", model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public async Task<JsonResult> SubmitQuote(int Id, string QuotationText)
+        {
+            try
+            {
                 using (AppDBContext context = new AppDBContext())
                 {
-                    request = new ServiceRequestRepository(context).GetAll();
+                    request = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);
                 }
 
-                return View(request);
-            //}
-            //catch (Exception ex)
-            //{
-            //    //Logger.Log(typeof(ServiceRequestController), ex.Message + ex.StackTrace, LogType.ERROR);
-            //    return InternalServerError();
-            //}
-        }
+                EnquiryForAdmin model = request.Where(x => x.Id == Id).FirstOrDefault();
 
-        //// GET: api/ServiceRequest/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST: api/ServiceRequest
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/ServiceRequest/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/ServiceRequest/5
-        public void Delete(int id)
-        {
+                await SendSMS.SendMessage(model.UserPhoneNumber, QuotationText);
+                
+                return Json(new { s = "Success" });
+            }
+            catch(Exception)
+            {
+                return Json(new { s = "Failed" });
+            }
         }
     }
 }

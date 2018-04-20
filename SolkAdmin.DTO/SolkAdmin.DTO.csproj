@@ -79,6 +79,7 @@
     <Compile Include="Contract\IVehicleImage.cs" />
     <Compile Include="Contract\IServiceRequestHistory.cs" />
     <Compile Include="CustomerSupportType.cs" />
+    <Compile Include="EnquiryForAdmin.cs" />
     <Compile Include="LoginHistory.cs" />
     <Compile Include="MessageThread.cs" />
     <Compile Include="Notification.cs" />
