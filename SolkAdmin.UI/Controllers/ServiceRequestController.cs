@@ -1,10 +1,8 @@
 ﻿using SolkAdmin.DbAccess;
 using SolkAdmin.DbAccess.Repository;
 using SolkAdmin.DTO;
-using SolkAdmin.DTO.Contract;
 using System;
 using System.Collections.Generic;
-using System.Web.Http;
 using System.Web.Mvc;
 using System.Linq;
 using SolkAdmin.UI.Helpers;
