@@ -173,7 +173,7 @@ namespace SolkAdmin.DbAccess.Repository
             return serviceRequests;
         }
 
-        public IEnumerable<EnquiryForAdmin> GetAllForSendQuote(long? id, string RequestNoOrVehicleNo, DateTime? FromDate, DateTime? Toate, bool IsOnlyNotSentQuote)
+        public IEnumerable<EnquiryForAdminDetail> GetAllForSendQuote(long? id, string RequestNoOrVehicleNo, DateTime? FromDate, DateTime? Toate, bool IsOnlyNotSentQuote)
         {
             var idParam = new SqlParameter("@Id", id);
 
@@ -183,7 +183,7 @@ namespace SolkAdmin.DbAccess.Repository
             }
 
             var result = context.Database
-                .SqlQuery<EnquiryForAdmin>("uspDailyEnquiryForAdmin @Id", idParam)
+                .SqlQuery<EnquiryForAdminDetail>("uspDailyEnquiryForAdmin @Id", idParam)
                 .ToList();
             return result;
         }

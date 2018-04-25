@@ -1,178 +1,200 @@
-﻿@model IEnumerable<SolkAdmin.DTO.EnquiryForAdmin>
+﻿@model SolkAdmin.DTO.EnquiryForAdmin
 
 @{
     ViewBag.Title = "ServiceRequest";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
 <script src="~/Scripts/bootstrap.min.js"></script>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
 <h2>ServiceRequest</h2>
 
+<div>
+    <div class="form-group input-group-sm">
+        @Html.LabelFor(model => model.FromDate, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.FromDate, new { @class = "date-picker" })
+            @Html.ValidationMessageFor(model => model.FromDate)
+        </div>
+    </div>
+</div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EnquiryStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserPhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegistrationCategory)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleValue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClaimType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UsageType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsFinanced)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpireTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StreetName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telephone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContactMethod)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestOrigin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsQuoteSent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastQuoteSentDate)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+@if (Model.EnquiryForAdminDetails.Any())
+{
+    var headingItem = Model.EnquiryForAdminDetails.First();
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnquiryStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserPhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationCategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClaimType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsageType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehicleYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsFinanced)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpireTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StreetName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telephone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactMethod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestOrigin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsQuoteSent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastQuoteSentDate)
-            </td>
-            <td>
-
-                @*<input type="button" id="SendQuoteButton" value="Send Quote" />*@
-
-                <a onclick="Open(@item.Id)">Send Quote</a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.EnquiryStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.UserPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.VehicleNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.RegistrationCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.FuelType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.VehicleValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.ClaimType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.UsageType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.VehicleYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.IsFinanced)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.ExpireTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.StreetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.Telephone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.ContactMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => headingItem.RequestOrigin)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => headingItem.IsQuoteSent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headingItem.LastQuoteSentDate)
+                </th>*@
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model.EnquiryForAdminDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnquiryStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserPhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuelType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClaimType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsageType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFinanced)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpireTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StreetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactMethod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestOrigin)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.IsQuoteSent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastQuoteSentDate)
+                    </td>*@
+                <td>
 
+                    <a onclick="Open(@item.Id)">Send Quote</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    @:No data available.
+}
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
@@ -207,4 +229,17 @@
             }
         })
     }
+
+    $(function () {
+        // This should targe the element generated by your EditorFor() Helper
+        $('.datepicker').datepicker();
+    })
+
+    //$(document).ready(function () {
+
+    //    $('.datepicker').datetimepicker({
+    //        format: 'dd/mm/yyyy'
+    //    });
+    //});
+
 </script>

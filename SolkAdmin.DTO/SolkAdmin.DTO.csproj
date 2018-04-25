@@ -80,6 +80,7 @@
     <Compile Include="Contract\IServiceRequestHistory.cs" />
     <Compile Include="CustomerSupportType.cs" />
     <Compile Include="EnquiryForAdmin.cs" />
+    <Compile Include="EnquiryForAdminDetail.cs" />
     <Compile Include="LoginHistory.cs" />
     <Compile Include="MessageThread.cs" />
     <Compile Include="Notification.cs" />

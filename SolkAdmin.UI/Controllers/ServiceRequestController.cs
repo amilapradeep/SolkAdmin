@@ -12,26 +12,30 @@ namespace SolkAdmin.UI.Controllers
 {
     public class ServiceRequestController : Controller
     {
-        private IEnumerable<EnquiryForAdmin> request;
-
+        private IEnumerable<EnquiryForAdminDetail> enquiryForAdminDetail;
+        private EnquiryForAdmin enquiryForAdmin;
 
         // GET: api/ServiceRequest
         public ActionResult Get()
         {
             using (AppDBContext context = new AppDBContext())
             {
-                request = new ServiceRequestRepository(context).GetAllForSendQuote(null, null, null, null, true);
+                enquiryForAdminDetail = new ServiceRequestRepository(context).GetAllForSendQuote(null, null, null, null, true);
             }
-            return View(request);
+
+            enquiryForAdmin = new EnquiryForAdmin();
+            enquiryForAdmin.EnquiryForAdminDetails = enquiryForAdminDetail;
+
+            return View(enquiryForAdmin);
         }
 
         public ActionResult GetDetail(int Id)
         {
             using (AppDBContext context = new AppDBContext())
             {
-                request = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);
+                enquiryForAdminDetail = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);
             }
-            EnquiryForAdmin model = request.Where(x => x.Id == Id).FirstOrDefault();
+            EnquiryForAdminDetail model = enquiryForAdminDetail.Where(x => x.Id == Id).FirstOrDefault();
 
             return PartialView("SendQuote", model);
         }
@@ -43,10 +47,10 @@ namespace SolkAdmin.UI.Controllers
             {
                 using (AppDBContext context = new AppDBContext())
                 {
-                    request = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);
+                    enquiryForAdminDetail = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);
                 }
 
-                EnquiryForAdmin model = request.Where(x => x.Id == Id).FirstOrDefault();
+                EnquiryForAdminDetail model = enquiryForAdminDetail.Where(x => x.Id == Id).FirstOrDefault();
 
                 await SendSMS.SendMessage(model.UserPhoneNumber, QuotationText);
                 
