@@ -3,3 +3,13 @@
 ################################################################################
 
 /.vs
+/packages
+/SolkAdmin.Common/bin/Debug
+/SolkAdmin.Common/obj/Debug
+/SolkAdmin.DbAccess/bin/Debug
+/SolkAdmin.DbAccess/obj/Debug
+/SolkAdmin.DTO/bin/Debug
+/SolkAdmin.DTO/obj/Debug
+/SolkAdmin.UI/bin
+/SolkAdmin.UI/obj/Debug
+*.user

@@ -16,11 +16,11 @@ namespace SolkAdmin.UI.Controllers
         private EnquiryForAdmin enquiryForAdmin;
 
         // GET: api/ServiceRequest
-        public ActionResult Get()
-        {
+        public ActionResult Get(DateTime? fromDate, DateTime? toDate)
+        {   
             using (AppDBContext context = new AppDBContext())
             {
-                enquiryForAdminDetail = new ServiceRequestRepository(context).GetAllForSendQuote(null, null, null, null, true);
+                enquiryForAdminDetail = new ServiceRequestRepository(context).GetAllForSendQuote(null, null, fromDate, toDate, true);
             }
 
             enquiryForAdmin = new EnquiryForAdmin();
@@ -53,10 +53,10 @@ namespace SolkAdmin.UI.Controllers
                 EnquiryForAdminDetail model = enquiryForAdminDetail.Where(x => x.Id == Id).FirstOrDefault();
 
                 await SendSMS.SendMessage(model.UserPhoneNumber, QuotationText);
-                
+
                 return Json(new { s = "Success" });
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Json(new { s = "Failed" });
             }

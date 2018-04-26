@@ -173,17 +173,31 @@ namespace SolkAdmin.DbAccess.Repository
             return serviceRequests;
         }
 
-        public IEnumerable<EnquiryForAdminDetail> GetAllForSendQuote(long? id, string RequestNoOrVehicleNo, DateTime? FromDate, DateTime? Toate, bool IsOnlyNotSentQuote)
+        public IEnumerable<EnquiryForAdminDetail> GetAllForSendQuote(long? id, 
+            string RequestNoOrVehicleNo, DateTime? FromDate, DateTime? ToDate, bool? IsOnlyNotSentQuote)
         {
             var idParam = new SqlParameter("@Id", id);
+            if (!id.HasValue)
+                 idParam.Value = DBNull.Value;
+            
+            var requestNoOrVehicleNoParam = new SqlParameter("@RequestNoOrVehicleNo", RequestNoOrVehicleNo);
+            if (string.IsNullOrWhiteSpace(RequestNoOrVehicleNo))
+                requestNoOrVehicleNoParam.Value = DBNull.Value;
 
-            if (id == null)
-            {
-                idParam.Value = DBNull.Value;
-            }
+            var fromDateParam = new SqlParameter("@FromDate", FromDate);
+            if (!FromDate.HasValue)
+                fromDateParam.Value = DBNull.Value;
+
+            var toDateParam = new SqlParameter("@ToDate", ToDate);
+            if (!ToDate.HasValue)
+                toDateParam.Value = DBNull.Value;
+
+            var isOnlyNotSentQuoteParam = new SqlParameter("@IsOnlyNotSentQuote", IsOnlyNotSentQuote);
+            if (!IsOnlyNotSentQuote.HasValue)
+                isOnlyNotSentQuoteParam.Value = DBNull.Value;
 
             var result = context.Database
-                .SqlQuery<EnquiryForAdminDetail>("uspDailyEnquiryForAdmin @Id", idParam)
+                .SqlQuery<EnquiryForAdminDetail>("uspDailyEnquiryForAdmin @Id, @FromDate, @ToDate, @RequestNoOrVehicleNo, @IsOnlyNotSentQuote", idParam, requestNoOrVehicleNoParam, fromDateParam, toDateParam, isOnlyNotSentQuoteParam)
                 .ToList();
             return result;
         }
