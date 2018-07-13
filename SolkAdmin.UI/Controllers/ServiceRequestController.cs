@@ -40,11 +40,13 @@ namespace SolkAdmin.UI.Controllers
             return PartialView("SendQuote", model);
         }
 
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public async Task<JsonResult> SubmitQuote(int Id, string QuotationText)
         {
             try
             {
+                QuotationText = QuotationText.Replace("\r", string.Empty);
+
                 using (AppDBContext context = new AppDBContext())
                 {
                     enquiryForAdminDetail = new ServiceRequestRepository(context).GetAllForSendQuote(Id, null, null, null, true);

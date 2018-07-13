@@ -1,9 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: SolkAdmin.UI.Helpers.SendSMS
-// Assembly: SolkAdmin.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 08258DEC-670D-4CE6-92B4-269F5A1CC95F
-// Assembly location: C:\Users\amila\OneDrive\Desktop\SolkAdmin.UI.dll
-
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
 using System.IO;
@@ -21,14 +16,26 @@ namespace SolkAdmin.UI.Helpers
 
         public static string LogFilePath { get; set; }
 
+        public static bool SendUsingBell { get; set; }
+
         public static async Task SendMessage(string phoneNumber, string messageText)
         {
             SendSMS.LogFilePath = ConfigurationManager.AppSettings["LogFilePath"];
             SendSMS.SMSGatewayUrl = ConfigurationManager.AppSettings["SMS_GatewayURL"];
             SendSMS.SMSGatewayAuthCode = ConfigurationManager.AppSettings["SMS_Gateway_AuthCode"];
-            await SendSMS.SendMessageAsync(phoneNumber, messageText);
+            SendSMS.SendUsingBell = Convert.ToBoolean(ConfigurationManager.AppSettings["SendUsingBell"]);
+
+            if (SendUsingBell)
+            {
+                await SendMessageBellAsync(phoneNumber, messageText);
+            }
+            else
+            {
+                await SendMessageDialogAsync(phoneNumber, messageText);
+            }
         }
 
+        [Obsolete ("Don't use this, Instead use bell or dialog methods")]
         private static async Task SendMessageAsync(string Phone, string Message)
         {
             StringContent stringContent = new StringContent("destination=" + Phone + "&q=" + SendSMS.SMSGatewayAuthCode + "&message=" + Message, Encoding.UTF8, "application/x-www-form-urlencoded");
@@ -60,6 +67,74 @@ namespace SolkAdmin.UI.Helpers
                     stringContent.Dispose();
             }
             stringContent = (StringContent)null;
+        }
+
+        private static async Task SendMessageDialogAsync(string Phone, string Message)
+        {
+            //dialog service
+            using (var stringContent = new StringContent("destination=" + Phone + "&q=" + SMSGatewayAuthCode + "&message=" + Message,
+                                                            Encoding.UTF8, "application/x-www-form-urlencoded"))
+            {
+                using (var client = new HttpClient())
+                {
+                    try
+                    {
+                        var response = await client.PostAsync(SMSGatewayUrl, stringContent);
+                        var result = await response.Content.ReadAsStringAsync();
+
+                        if (result == "0")
+                        {
+                            LogInfo(Phone + " Sent at " + DateTime.Now.ToString("yyyy-dd-M HH-mm-ss"));
+                        }
+                        else
+                        {
+                            LogInfo(Phone + " Failed at " + DateTime.Now.ToString("yyyy-dd-M HH-mm-ss") + " " + result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogInfo(Phone + " Failed at " + DateTime.Now.ToString("yyyy-dd-M HH-mm-ss") + " - Exception " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private static async Task SendMessageBellAsync(string Phone, string Message)
+        {
+            var BellSMSURL = ConfigurationManager.AppSettings["BellSMSURL"];
+            var BellSMSCompanyId = ConfigurationManager.AppSettings["BellSMSCompanyId"];
+            var BellSMSPassword = ConfigurationManager.AppSettings["BellSMSPassword"];
+
+            //http://119.235.1.63:4050/Sms.svc/SendSms?phoneNumber=[phoneNumber]&smsMessage=[smsMessage]&companyId=[companyId]&pword=[pword]
+            var smsCommand = string.Concat(BellSMSURL, "?phoneNumber=", Phone, "&smsMessage=", Message, "&companyId=", BellSMSCompanyId, "&pword=", BellSMSPassword);
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var response = await client.GetAsync(smsCommand);
+                    var result = await response.Content.ReadAsStringAsync();
+
+                    JObject joResponse = JObject.Parse(result);
+
+                    string responseCode = joResponse["Status"].ToString();
+                    string responseData = joResponse["Data"].ToString();
+                    string responseId = joResponse["ID"].ToString();
+
+                    if (responseCode == "200")
+                    {
+                        LogInfo(Phone + " Sent at " + DateTime.Now.ToString("yyyy-dd-M HH-mm-ss") + " ID : " + responseId);
+                    }
+                    else
+                    {
+                        LogInfo(Phone + " Failed at " + DateTime.Now.ToString("yyyy-dd-M HH-mm-ss") + " " + responseData + " ID : " + responseId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogInfo(Phone + " Failed at " + DateTime.Now.ToString("yyyy-dd-M HH-mm-ss") + " - Exception " + ex.Message);
+                }
+            }
         }
 
         private static void LogInfo(string logText)

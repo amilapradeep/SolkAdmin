@@ -13,3 +13,10 @@
 /SolkAdmin.UI/bin
 /SolkAdmin.UI/obj/Debug
 *.user
+/SolkAdmin.Common/bin/Release
+/SolkAdmin.Common/obj/Release
+/SolkAdmin.DbAccess/bin/Release
+/SolkAdmin.DbAccess/obj/Release
+/SolkAdmin.DTO/bin/Release
+/SolkAdmin.DTO/obj/Release
+/SolkAdmin.UI/obj/Release
